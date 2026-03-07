@@ -1,22 +1,42 @@
-from parser import parse_line
+import json
+try:
+    from .parser import parse_line
+except ImportError:
+    from parser import parse_line
 
-def watch_log(file_path):
+
+def watch_log(file_path, patterns, json_output=False):
     passed = 0
     failed = 0
+    results = []
 
     with open(file_path, "r") as file:
-        lines = file.readlines()
+        for line in file:
+            result = parse_line(line, patterns)
+            stripped_line = line.strip()
 
-    for line in lines:
-        result = parse_line(line)
+            if result == "FAIL":
+                failed += 1
+                if not json_output:
+                    print(f"❌ {stripped_line}")
+            else:
+                passed += 1
+                if not json_output:
+                    print(f"✔ {stripped_line}")
 
-        if result == "FAIL":
-            failed += 1
-            print(f"❌ {line.strip()}")
-        else:
-            passed += 1
-            print(f"✔ {line.strip()}")
+            if json_output:
+                results.append({"line": stripped_line, "status": result})
 
-    print("\nSummary")
-    print("Passed:", passed)
-    print("Failed:", failed)
+    if json_output:
+        output = {
+            "results": results,
+            "summary": {
+                "passed": passed,
+                "failed": failed
+            }
+        }
+        print(json.dumps(output, indent=4))
+    else:
+        print("\nSummary")
+        print("Passed:", passed)
+        print("Failed:", failed)
