@@ -20,7 +20,6 @@ parts/
 sdist/
 var/
 wheels/
-pip-wheel-metadata/
 share/python-wheels/
 *.egg-info/
 .installed.cfg
@@ -44,48 +43,39 @@ coverage.xml
 *.py,cover
 .hypothesis/
 .pytest_cache/
+cover/
 
-# Virtual environments
+# Environments
+.env
+.venv
+env/
 venv/
 ENV/
-env/
-.venv/
-ENV.bak/
 env.bak/
+venv.bak/
 
-# IDE / Editor
+# IDEs and Editors
 .vscode/
 .idea/
 *.swp
 *.swo
-*~
-.DS_Store
-.project
-.pydevproject
-.settings/
-*.sublime-project
-*.sublime-workspace
 
-# macOS
+# OS generated files
 .DS_Store
-.AppleDouble
-.LSOverride
+.DS_Store?
 ._*
 .Spotlight-V100
 .Trashes
-
-# System files
-Thumbs.db
 ehthumbs.db
+Thumbs.db
+
+# Logs and databases
+*.log
+*.sqlite
+logs/
 
 # Project-specific
-*.log
 test_results/
 temp/
 tmp/
 *.tmp
-
-# OS-specific
-.env
-.env.local
-.env.*.local
